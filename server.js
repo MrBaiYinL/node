@@ -3,7 +3,7 @@ const http = require('http');
 const url = require('url')
 
 /**
- * 请求的URL：http://127.0.0.1:3000/index?name=zs&age=20
+ * 请求的URL：http://127.0.0.1:3000
  */
 const hostname = '127.0.0.1'
 const port = 3000
@@ -69,5 +69,5 @@ const server = http.createServer((req, res) => {
 
 //调用服务器的listen方法，监听主机的端口
 server.listen(port, hostname, () => {
-console.log(`服务器运行在 http://${hostname}:${port}/`);  //模板字符串
+  console.log(`服务器运行在 http://${hostname}:${port}/`);  //模板字符串
 });
