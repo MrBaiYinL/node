@@ -19,12 +19,11 @@ const server = http.createServer((req, res) => {
     res.statusCode = 200
     res.setHeader('Content-Type', 'text/html;charset=utf-8')
     const type = req.method
+    let getUrl = url.parse(req.url,true)
 
     if (type.toLowerCase() === 'get') {
-      // 将 URL 字符串转成 URL 对象
-      // let myUrl = url.parse(req.url)
-      // 获取参数
-      // let params = new URLSearchParams(myUrl.query)
+      // 将 URL 字符串转成 URL 对象 let getUrl = url.parse(req.url)
+      // 获取参数 let params = new URLSearchParams(getUrl.query)
       console.log('getData')
       console.log(data)
 
@@ -37,31 +36,32 @@ const server = http.createServer((req, res) => {
       })
       
       req.on('end', () => {
-        let myUrl = url.parse(req.url,true)
-        console.log(myUrl.query)
-        data.push(myUrl.query)
+        console.log(getUrl.query)
+        data.push(getUrl.query)
         console.log(data)
       })
       
     } else if (type.toLowerCase() === 'delete') {
-      let myUrl = url.parse(req.url,true)
-      console.log(myUrl.query)
+
+      console.log(getUrl.query)
       const newData = data.filter(item => {
-        return item.id != myUrl.query.id
+        return item.id != getUrl.query.id
       })
-      console.log('deleteData', myUrl.query.id)
+      console.log('deleteData', getUrl.query.id)
       console.log(newData)
+
     } else if (type.toLowerCase() === 'put') {
-      let myUrl = url.parse(req.url,true)
-      console.log(myUrl.query)
+
+      console.log(getUrl.query)
       data.forEach(item => {
-        if (myUrl.query.id == item.id) {
-          item.age = myUrl.query.age || item.age
-          item.name = myUrl.query.name || item.name
+        if (getUrl.query.id == item.id) {
+          item.age = getUrl.query.age || item.age
+          item.name = getUrl.query.name || item.name
         }
       })
       console.log('data')
       console.log(data)
+
     }
     res.end()
 })
